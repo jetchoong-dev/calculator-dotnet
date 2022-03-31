@@ -69,6 +69,31 @@ namespace Calculator.Service.Tests
 
             calculator.Expression = "-8 * -1 * -1";
             Assert.AreEqual("-8", calculator.Calculate());
+
+            calculator.Expression = "5 ( 20 + 1 )";
+            Assert.AreEqual("105", calculator.Calculate());
+
+            calculator.Expression = "5 + 5 ( 20 + 1 )";
+            Assert.AreEqual("110", calculator.Calculate());
+
+            calculator.Expression = "( 5 ) ( 20 + 1 )";
+            Assert.AreEqual("105", calculator.Calculate());
+
+            calculator.Expression = "( 5 + 5 ) ( 20 + 1 )";
+            Assert.AreEqual("210", calculator.Calculate());
+
+            calculator.Expression = "( 5 ) 20";
+            Assert.AreEqual("100", calculator.Calculate());
+
+            calculator.Expression = "( 5 ) 20 + 1";
+            Assert.AreEqual("101", calculator.Calculate());
+
+            calculator.Expression = "( 5 ) ( 5 ) ( 5 )";
+            Assert.AreEqual("125", calculator.Calculate());
+
+            calculator.Expression = "( 5 ) ( 5 ) ( 20 + 1 )";
+            Assert.AreEqual("525", calculator.Calculate());
+
         }
 
         [TestMethod()]

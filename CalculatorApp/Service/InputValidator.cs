@@ -15,12 +15,6 @@ namespace CalculatorApp.Service
             if (matched1.Success)
                 throw new SyntaxException($"Invalid character found in expression, only allow numbers 0-9, brackets {"("} {")"} & operators {"+"} {"-"} {"*"} {"/"} ");
 
-            // check if there is no operator
-            string pattern2 = @"[\+\-\*\/]";
-            var matched2 = Regex.Match(expression, pattern2);
-            if (!matched2.Success)
-                throw new SyntaxException("Missing operator");
-
             // identify mismatched brackets
             if (expression.Count(e => e == '(') != expression.Count(e => e == ')'))
                 throw new SyntaxException("Mismatched brackets found");
@@ -39,21 +33,21 @@ namespace CalculatorApp.Service
             }
 
             // identify empty brackets 
-            string pattern3 = @"\(\s*\)";
-            var matched3 = Regex.Match(expression, pattern3);
-            if (matched3.Success)
+            string pattern2 = @"\(\s*\)";
+            var matched2 = Regex.Match(expression, pattern2);
+            if (matched2.Success)
                 throw new SyntaxException("Empty brackets found");
 
             // identify consecutive numbers
-            string pattern4 = @"\d+\s+\d+"; 
-            var matched4 = Regex.Match(expression, pattern4);
-            if (matched4.Success)
+            string pattern3 = @"\d+\s+\d+"; 
+            var matched3 = Regex.Match(expression, pattern3);
+            if (matched3.Success)
                 throw new SyntaxException("Consecutive numbers or operators found");
 
             // identify misplaced operator 
-            string pattern5 = @"[\+\-\/\*]\s*[\+\-\/\*]\s+|\d+[\+\-\/\*]|[\*\/]\d+|[\+\-\*\/][\+\-\*\/]\d+";
-            var matched5 = Regex.Match(expression, pattern5);
-            if (matched5.Success)
+            string pattern4 = @"[\+\-\/\*]\s*[\+\-\/\*]\s+|\d+[\+\-\/\*]|[\*\/]\d+|[\+\-\*\/][\+\-\*\/]\d+";
+            var matched4 = Regex.Match(expression, pattern4);
+            if (matched4.Success)
                 throw new SyntaxException("Misplaced operator found");
 
 
@@ -66,6 +60,15 @@ namespace CalculatorApp.Service
             var matched = Regex.Match(expression, pattern);
             if (matched.Success)
                 throw new SyntaxException("Misplaced operator found");
+        }
+
+        public void ValidateMissingOperators(string expression)
+        {
+            // check if there is no operator
+            string pattern = @"[\+\-\*\/]";
+            var matched = Regex.Match(expression, pattern);
+            if (!matched.Success)
+                throw new SyntaxException("Missing operator");
         }
     }
 }

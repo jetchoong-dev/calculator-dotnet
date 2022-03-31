@@ -25,11 +25,6 @@ namespace CalculatorApp.Service.Tests
         public void ValidateInputSyntaxExceptionTest()
         {
             var validator = new InputValidator();
-
-            Assert.ThrowsException<SyntaxException>(() =>
-            {
-                validator.ValidateInput("1");
-            });
             Assert.ThrowsException<SyntaxException>(() =>
             {
                 validator.ValidateInput("a");
@@ -140,6 +135,28 @@ namespace CalculatorApp.Service.Tests
             Assert.ThrowsException<SyntaxException>(() =>
             {
                 validator.ValidateOperators("/ 1 + 2 -");
+            });
+        }
+
+        [TestMethod()]
+        public void ValidateMissingOperatorsTest()
+        {
+            var validator = new InputValidator();
+            Assert.ThrowsException<SyntaxException>(() =>
+            {
+                validator.ValidateMissingOperators("( 20 ) 5");
+            });
+            Assert.ThrowsException<SyntaxException>(() =>
+            {
+                validator.ValidateMissingOperators("20 5");
+            });
+            Assert.ThrowsException<SyntaxException>(() =>
+            {
+                validator.ValidateMissingOperators("( 20 ) ( 5 )");
+            });
+            Assert.ThrowsException<SyntaxException>(() =>
+            {
+                validator.ValidateMissingOperators("1");
             });
         }
     }

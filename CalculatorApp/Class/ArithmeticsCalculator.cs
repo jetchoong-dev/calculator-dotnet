@@ -25,11 +25,14 @@ namespace Calculator.Service
 
         public string Calculate()
         {
-            // validate input
+            // validate input expression
             _validator.ValidateInput(_expression);
 
             // convert special multiplication expression pattern (if any)
             _expression = _helper.ConvertSpecialMultiplicationPattern(_expression);
+
+            // validate expression operators
+            _validator.ValidateMissingOperators(_expression);
 
             // identify innermost brackets
             string pattern = @"\([^()]*\)";
