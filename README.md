@@ -1,4 +1,5 @@
 # calculator-dotnet
+An application that performs basic arithmetic calculation
 
 ## Steps to run with Visual Studio
 1. Clean solution `Caculator`
