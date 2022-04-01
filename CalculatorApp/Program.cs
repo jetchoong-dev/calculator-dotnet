@@ -1,7 +1,7 @@
 ﻿using Calculator.Service;
 using CalculatorApp.Exceptions;
+using CalculatorApp.Service;
 using System;
-using System.Collections.Generic;
 
 namespace CalculatorApp
 {
@@ -21,8 +21,8 @@ namespace CalculatorApp
                     if (string.Equals(expression, "quit", StringComparison.OrdinalIgnoreCase)) break;
                     if (string.IsNullOrEmpty(expression)) continue;
 
-                    var calculator = new ArithmeticsCalculator(expression);
-                    string answer = calculator.Calculate();
+                    var calculator = new ArithmeticsCalculator(new InputValidator(), new CalculatorHelper());
+                    string answer = calculator.Calculate(expression);
 
                     Console.WriteLine($"Answer => {answer} \n");
                 }

@@ -10,47 +10,41 @@ namespace Calculator.Service
 {
     public class ArithmeticsCalculator
     {
-        string _expression;
         InputValidator _validator;
         CalculatorHelper _helper;
 
-        public string Expression { get { return _expression; } set { _expression = value; } }
-
-        public ArithmeticsCalculator(string expression)
+        public ArithmeticsCalculator(InputValidator validator, CalculatorHelper helper)
         {
-            _expression = expression;
-            _validator = new InputValidator();
-            _helper = new CalculatorHelper();
+            _validator = validator;
+            _helper = helper;
         }
 
-        public string Calculate()
+        public string Calculate(string expression)
         {
-            // validate input expression
-            _validator.ValidateInput(_expression);
+            // input expression main validation
+            _validator.ValidateInput(expression);
 
             // convert special multiplication expression pattern (if any)
-            _expression = _helper.ConvertSpecialMultiplicationPattern(_expression);
+            expression = _helper.ConvertSpecialMultiplicationPattern(expression);
 
             // validate expression operators
-            _validator.ValidateMissingOperators(_expression);
+            _validator.ValidateMissingOperators(expression);
 
             // identify innermost brackets
             string pattern = @"\([^()]*\)";
             var regex = new Regex(pattern);
-
-            var matched = regex.Matches(_expression);
+            var matched = regex.Matches(expression);
 
             // compute found innermost brackets and its expressions
             while (matched.Count > 0)
             {
                 string value = Compute(matched[0].Value);
-                _expression = _expression.Replace(matched[0].Value, value);
-                matched = regex.Matches(_expression);
-                _expression = _helper.ConvertSpecialMultiplicationPattern(_expression);
+                expression = expression.Replace(matched[0].Value, value);
+                matched = regex.Matches(expression);
+                expression = _helper.ConvertSpecialMultiplicationPattern(expression);
             }
 
-            string finalAnswer = Compute(_expression);
-            return finalAnswer;
+            return Compute(expression);
         }
 
         private string Compute(string expression)
@@ -141,9 +135,7 @@ namespace Calculator.Service
                 } 
             }
 
-            var answer = characteres[0];
-
-            return answer;
+            return characteres[0];
         }
     }
 }

@@ -49,8 +49,6 @@ namespace CalculatorApp.Service
             var matched4 = Regex.Match(expression, pattern4);
             if (matched4.Success)
                 throw new SyntaxException("Misplaced operator found");
-
-
         }
 
         public void ValidateOperators(string expression)
